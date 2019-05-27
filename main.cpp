@@ -77,18 +77,24 @@ struct App
 		wnd.renderHandler( [&](SoftwareRenderer& r)
 		{
 			r.forall_pixels([](auto, auto, auto){ return color(255, 255, 255); });
+			auto blue = [](auto){return color(10, 0, 167);};
+			auto black = [](auto) {return color(0, 0, 0);};
+			auto red = [](auto) {return color(240, 0, 21);};
+
 			if(data.size() > 4)
 			{
-				r.lineplot(16, 16, wnd.width()-32, wnd.height()-32, 0.0, (double)(data.size()-1), 0.0, 100.0, color(128, 128, 128), [&](double i){ return data[(int)i].x; });
-				r.lineplot(16, 16, wnd.width()-32, wnd.height()-32, 0.0, (double)(data.size()-1), 0.0, 100.0, color(255, 64, 0), [&](double i){ return data[(int)i].y; });
+				r.ellipse(300, 200, 5, 5, black);
+				r.line(300, 200, 350, 260, blue);
+				r.ellipse(350,260, 5, 5, blue);
+				r.line(350, 260, 400, 340, red);
+				r.ellipse(400, 340, 5, 5, red);
 			}
 		});
 
-		bool res = wnd.open(L"C++ App", {42, 64}, {640, 480}, true, [&]{ return true; });
+		bool res = wnd.open(L"Double Pendulum Simulation", {64, 64}, {640, 480}, true, [&]{ return true; });
 		return res ? 0 : -1;
 	}
 };
-
 //#ifdef _WIN32
 //int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine, int nCmdShow)
 //#else
