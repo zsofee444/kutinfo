@@ -83,11 +83,18 @@ struct App
 
 			if(data.size() > 4)
 			{
-				r.ellipse(300, 200, 5, 5, black);
-				r.line(300, 200, 350, 260, blue);
-				r.ellipse(350,260, 5, 5, blue);
-				r.line(350, 260, 400, 340, red);
-				r.ellipse(400, 340, 5, 5, red);
+			double L1s=70;
+			double L2s=70;
+			double x1= 300+L1s*cos(([&](double i){ return data[(int)i].x;}));
+			double y1= 200+L1s*sin(([&](double i){ return data[(int)i].x;}));
+			double x2= x1+L2s*cos(([&](double i){ return data[(int)i].y;}));
+			double y2= y1 + L2s*sin(([&](double i){ return data[(int)i].y;}));
+
+			r.ellipse(300, 200, 5, 5, black);
+			r.line(300, 200, x1, y1, blue);
+			r.ellipse(x1, y1, 5, 5, blue);
+			r.line(x1, y1, x2, y2, red);
+			r.ellipse(x2, y2, 5, 5, red);
 			}
 		});
 
