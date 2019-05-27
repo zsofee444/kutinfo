@@ -4,15 +4,14 @@
 #include "miniwindow.h"
 
 template<typename T>
-struct Vector2
 {
-	T x, y;
+	T x, y, z, w;
 };
-template<typename T> Vector2<T> operator+(Vector2<T> const& v1, Vector2<T> const& v2){ return {v1.x + v2.x, v1.y + v2.y}; }
-template<typename T> Vector2<T> operator-(Vector2<T> const& v1, Vector2<T> const& v2){ return {v1.x - v2.x, v1.y - v2.y}; }
-template<typename T> Vector2<T> operator*(T const& scl, Vector2<T> const& v){ return {scl*v.x, scl*v.y}; }
-template<typename T> Vector2<T> operator*(Vector2<T> const& v, T const& scl){ return {v.x*scl, v.y*scl}; }
-template<typename T> Vector2<T> operator/(Vector2<T> const& v, T const& scl){ return {v.x/scl, v.y/scl}; }
+template<typename T> Vector4<T> operator+(Vector4<T> const& v1, Vector4<T> const& v2){ return {v1.x + v2.x, v1.y +v2.y, v1.z+v2.z, v1.w+v2.w}; }
+template<typename T> Vector4<T> operator-(Vector4<T> const& v1, Vector4<T> const& v2){ return {v1.x - v2.x, v1.y - v2.y, v1.z-v2.z, v1.w-v2.w}; }
+template<typename T> Vector4<T> operator*(T const& scl, Vector4<T> const& v){ return {scl*v.x, scl*v.y, scl*v.z, scl*v.w}; }
+template<typename T> Vector4<T> operator*(Vector4<T> const& v, T const& scl){ return {v.x*scl, v.y*scl, v.z*scl, v.w*scl}; }
+template<typename T> Vector4<T> operator/(Vector4<T> const& v, T const& scl){ return {v.x/scl, v.y/scl, v.z/scl, v.w/scl}; }
 
 template<typename State, typename T, typename RHS, typename Callback> 
 auto solve_rk4(State y0, T t0, T t1, T h, RHS f, Callback cb)
