@@ -37,11 +37,11 @@ struct App
 {
 	MainWindow wnd;
 
-	Vector2<double> state;
+	Vector4<double> state;
 	double time, h;
 	double a, b, c, d;
 
-	std::vector<Vector2<double>> data;
+	std::vector<Vector4<double>> data;
 
 	App()
 	{
@@ -60,13 +60,15 @@ struct App
 		wnd.idleHandler([&]
 		{
 			state = solve_rk4(state, time, time + 0.001, h,
-			[this](double const& /*t*/, Vector2<double> const& s)->Vector2<double>
+			[this](double const& /*t*/, Vector4<double> const& s)->Vector4<double>
 			{
-				return {a*s.x - b*s.x*s.y, d*s.x*s.y - c*s.y };
+				double den=2*m1 + m2 - m2* cos(2*s.x-2*s.y);
+				double a = (-g*(2*m1+m2)*sin(s.x)-m2*g*sin(s.x-2*s.y)-2*sin(s.x-s.y)*m2*(s.w*s.w*L2+s.z*s.z*L1*cos(s.x-s.y))) / (L1*den);
+				double b = (2*sin(s.x-s.y)*(s.z*s.z*L1*(m1+m2)+g*(m1+m2)*cos(s.x)+s.z*s.z*L2*m2*cos(s.x-s.y)))/(L2*den);
+				return {s.z, s.w, a, b};
 			},
-			[this](double const& /*t*/, Vector2<double> const& state)
+			[this](double const& /*t*/, Vector4<double> const& state)
 			{
-				//std::cout << t << "   " << state.x << "   " << state.y << "\n";
 				data.push_back(state);
 			} );
 		});
